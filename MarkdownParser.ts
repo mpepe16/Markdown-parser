@@ -220,7 +220,29 @@ class HtmlHandler {
         }
        }
 
-       
+       // This factory class is responsible for creating all the necessary classes for our chain.
+       // It's just basically creating all the necessary object and call their SetNext method in order to
+       // give them the proper next class they lead the program.
+       class ChainOfResponsibilityFactory {
+        Build(document : IMarkdownDocument) : ParseChainHandler {
+        let header1 : Header1ChainHandler = new
+       Header1ChainHandler(document);
+        let header2 : Header2ChainHandler = new
+       Header2ChainHandler(document);
+        let header3 : Header3ChainHandler = new
+       Header3ChainHandler(document);
+        let horizontalRule : HorizontalRuleHandler = new
+       HorizontalRuleHandler(document);
+        let paragraph : ParagraphHandler = new ParagraphHandler(document);
+        header1.SetNext(header2);
+        header2.SetNext(header3);
+        header3.SetNext(horizontalRule);
+        horizontalRule.SetNext(paragraph);
+ return header1;
+ }
+}
+
+
        
     
    
