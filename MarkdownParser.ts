@@ -9,18 +9,30 @@ enum TagType {
 // This class is responsible for getting the textare and the label html elements
 // and fill the markDown output with the value from the markdown property.
 class HtmlHandler {
+    
+    private markdownChange : Markdown = new Markdown;
     public TextChangeHandler(id : string, output : string) : void {
     let markdown = <HTMLTextAreaElement>document.getElementById(id);
-    let markdownOutput = <HTMLLabelElement>document.getElementById(output);
+    let markdownOutput =
+   <HTMLLabelElement>document.getElementById(output);
     if (markdown !== null) {
     markdown.onkeyup = (e) => {
+    this.RenderHtmlContent(markdown, markdownOutput);
+    }
+    window.onload = (e) => {
+    this.RenderHtmlContent(markdown, markdownOutput);
+    }} }
+    
+    private RenderHtmlContent(markdown: HTMLTextAreaElement,
+   markdownOutput: HTMLLabelElement) {
     if (markdown.value) {
-    markdownOutput.innerHTML = markdown.value;
+    markdownOutput.innerHTML =
+   this.markdownChange.ToHtml(markdown.value);
     }
     else
     markdownOutput.innerHTML = "<p></p>";
-    } }}}
-
+    }}
+   
    class TagTypeToHtml {
     // The readonly keyword means that after the class instantiation, the tagtype 
     // cannot be recreated elsewhere.
